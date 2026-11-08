@@ -134,7 +134,8 @@ if __name__ == '__main__':
     rows = fetch_day(date)
     print(f"  {len(rows)} 行")
     if not rows:
-        print("无数据"); sys.exit(1)
+        print(f"{date} 无数据（非交易日？），跳过")
+        sys.exit(0)
     data = analyze(rows)
     html = render(date, data)
     out = f'{BASE}/docs/{date}.html'
