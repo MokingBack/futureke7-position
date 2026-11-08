@@ -166,9 +166,8 @@ h1{{font-size:20px;text-align:center;margin-bottom:24px}}
 </div></body></html>'''
     open(f'{BASE}/docs/index.html','w').write(idx)
     # 生成 sitemap.xml
-    urls = ''.join(f'  <url><loc>https://position.futureke7.cn/{d}.html</loc><lastmod>{d}</lastmod></url>\n' for d in files)
     sm = f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://position.futureke7.cn/</loc><lastmod>{date}</lastmod></url>
-{urls}</urlset>'''
+</urlset>'''
     open(f'{BASE}/docs/sitemap.xml','w').write(sm)
