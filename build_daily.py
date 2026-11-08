@@ -124,7 +124,7 @@ h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
 <h1>持仓观察</h1>
 <div class="sub">{date}</div>
 <div class="board">{''.join(cols_html)}</div>
-<div style="text-align:center;color:#555;font-size:11px;margin-top:20px">futureke7 · 未来可期工作室</div>
+<div style="text-align:center;color:#555;font-size:11px;margin-top:20px">futureke7 · 未来可期工作室<br><span style="color:#444">本页仅为公开持仓数据统计整理，不构成任何投资建议</span></div>
 </body></html>'''
     return html
 
