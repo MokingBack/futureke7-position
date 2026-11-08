@@ -142,5 +142,26 @@ if __name__ == '__main__':
     os.makedirs(f'{BASE}/docs', exist_ok=True)
     open(out,'w').write(html)
     print(f"已生成 {out}")
-    # 同时更新index.html指向最新
-    open(f'{BASE}/docs/index.html','w').write(f'<meta http-equiv="refresh" content="0;url={date}.html">')
+    # 生成历史列表 index.html
+    import glob as _g
+    files = sorted([os.path.basename(p).replace('.html','') for p in _g.glob(f'{BASE}/docs/*.html') if os.path.basename(p)!='index.html'], reverse=True)
+    rows = ''.join(f'<div class="row"><a href="{d}.html">{d}</a></div>' for d in files)
+    idx = f'''<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>持仓观察 - 历史</title>
+<style>
+body{{font-family:-apple-system,"PingFang SC",sans-serif;background:#1a1a2e;color:#eee;margin:0;padding:40px 20px}}
+.wrap{{max-width:600px;margin:0 auto}}
+h1{{font-size:20px;text-align:center;margin-bottom:24px}}
+.row{{padding:12px;border-bottom:1px solid #333}}
+.row a{{color:#aaa;text-decoration:none;font-size:15px}}
+.row a:hover{{color:#fff}}
+.foot{{text-align:center;color:#555;font-size:11px;margin-top:30px}}
+</style></head><body>
+<div class="wrap">
+<h1>持仓观察</h1>
+{rows}
+<div class="foot">futureke7 · 未来可期工作室<br>本页仅为公开持仓数据统计整理，不构成任何投资建议</div>
+</div></body></html>'''
+    open(f'{BASE}/docs/index.html','w').write(idx)
