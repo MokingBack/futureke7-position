@@ -1,6 +1,6 @@
-# futureke7 期货席位蓝图
+# futureke7 持仓观察
 
-复刻"交易可查网-交易蓝图"：每天把东方财富持仓数据按 家人/机构/外资 三组汇总，输出三栏静态页。
+复刻"交易可查网-持仓观察"：每天把东方财富持仓数据按 家人/机构/外资 三组汇总，输出三栏静态页。
 
 ## 目录
 - `build_daily.py` — 拉当日数据→生成HTML
@@ -9,7 +9,7 @@
 - `.github/workflows/daily.yml` — 每个交易日20:00自动跑
 
 ## 部署
-1. 新建GitHub仓库 `futureke7-blueprint`
+1. 新建GitHub仓库 `futureke7-position`
 2. 推送本目录
 3. Settings → Pages → 选 `docs/` 分支
 4. Actions 权限给 read+write（Settings → Actions → General → Workflow permissions）

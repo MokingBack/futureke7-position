@@ -1,4 +1,4 @@
-name: daily-blueprint
+name: daily-position
 on:
   schedule:
     # 每个交易日下午5点跑（交易所日盘收盘后数据已出）

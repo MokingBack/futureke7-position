@@ -108,7 +108,7 @@ def render(date, data):
     html = f'''<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>期货席位蓝图 - {date}</title>
+<title>持仓观察 - {date}</title>
 <style>
 body{{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#1a1a2e;color:#eee;margin:0;padding:16px}}
 h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
@@ -121,7 +121,7 @@ h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
 .act{{text-align:right}}
 @media(max-width:700px){{.board{{grid-template-columns:1fr}}}}
 </style></head><body>
-<h1>期货席位蓝图</h1>
+<h1>持仓观察</h1>
 <div class="sub">{date} · 数据来源：东方财富</div>
 <div class="board">{''.join(cols_html)}</div>
 <div style="text-align:center;color:#555;font-size:11px;margin-top:20px">futureke7 · 未来可期工作室</div>
