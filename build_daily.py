@@ -86,7 +86,7 @@ def to_actions(sym, g, vals):
 
 def render(date, data):
     """生成HTML"""
-    groups = [('retail','五大家人'),('inst','五大机构'),('foreign','外资')]
+    groups = [('retail','中小客户'),('inst','大型客户'),('foreign','境外客户')]
     # 收集每组要展示的品种
     cols_html = []
     for gkey, gname in groups:
@@ -122,7 +122,7 @@ h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
 @media(max-width:700px){{.board{{grid-template-columns:1fr}}}}
 </style></head><body>
 <h1>持仓观察</h1>
-<div class="sub">{date} · 数据来源：东方财富</div>
+<div class="sub">{date}</div>
 <div class="board">{''.join(cols_html)}</div>
 <div style="text-align:center;color:#555;font-size:11px;margin-top:20px">futureke7 · 未来可期工作室</div>
 </body></html>'''
