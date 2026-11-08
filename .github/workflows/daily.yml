@@ -1,0 +1,24 @@
+name: daily-blueprint
+on:
+  schedule:
+    # 每个交易日下午5点跑（交易所日盘收盘后数据已出）
+    - cron: '0 9 * * 1-5'  # UTC 09:00 = 北京17:00
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install requests
+      - name: Build today
+        run: python3 build_daily.py
+      - name: Commit & push
+        run: |
+          git config user.name "futureke7-bot"
+          git config user.email "bot@futureke7.cn"
+          git add docs/
+          git diff --cached --quiet || git commit -m "auto: build $(date -u +%Y-%m-%d)"
+          git push
