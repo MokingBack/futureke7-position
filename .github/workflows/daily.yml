@@ -1,8 +1,8 @@
 name: daily-position
 on:
   schedule:
-    # 每个交易日下午5点跑（交易所日盘收盘后数据已出）
-    - cron: '0 9 * * 1-5'  # UTC 09:00 = 北京17:00
+    # 每个交易日下午5点05跑（避开整点拥堵）
+    - cron: '5 9 * * 1-5'  # UTC 09:05 = 北京17:05
   workflow_dispatch:
 
 jobs:
