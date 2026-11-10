@@ -36,7 +36,8 @@ def group_of(name):
     return 'retail'
 
 def fetch_day(date):
-    """拉一天数据"""
+    """拉一天数据，带重试"""
+    import time
     url = 'https://datacenter-web.eastmoney.com/api/data/v1/get'
     all_rows = []
     page = 1
@@ -52,8 +53,18 @@ def fetch_day(date):
             'client': 'WEB',
             'filter': f"(TRADE_DATE='{date}')(TYPE=\"0\")"
         }
-        r = requests.get(url, params=params, headers={'Referer':'https://data.eastmoney.com/'}, timeout=30)
-        d = r.json()
+        d = None
+        for attempt in range(3):
+            try:
+                r = requests.get(url, params=params, headers={'Referer':'https://data.eastmoney.com/'}, timeout=60)
+                d = r.json()
+                break
+            except Exception as e:
+                print(f"  第{attempt+1}次请求失败: {e}")
+                time.sleep(3)
+        if d is None:
+            print("  重试3次仍失败，跳过")
+            return []
         if not d.get('result'): break
         rows = d['result']['data']
         all_rows.extend(rows)
