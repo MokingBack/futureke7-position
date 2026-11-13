@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """每日生成蓝图HTML"""
-import json, os, sys, requests
+import json, os, sys, time, requests
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 CFG = json.load(open(f'{BASE}/classify.json'))
@@ -140,10 +140,24 @@ h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
     return html
 
 if __name__ == '__main__':
-    date = sys.argv[1] if len(sys.argv)>1 else datetime.now().strftime('%Y-%m-%d')
+    # 日期一律按北京时间，避免UTC跨日
+    bj_now = datetime.utcnow() + timedelta(hours=8)
+    date = sys.argv[1] if len(sys.argv)>1 else bj_now.strftime('%Y-%m-%d')
     print(f"拉取 {date} ...")
     rows = fetch_day(date)
     print(f"  {len(rows)} 行")
+    # 数据未发布时自动等待重试（最多等到北京时间20:30）
+    waited = 0
+    while not rows and len(sys.argv) <= 1:
+        now_bj = datetime.utcnow() + timedelta(hours=8)
+        if now_bj.hour >= 20:
+            print("已过20点仍无数据，放弃")
+            break
+        print(f"  数据未发布，5分钟后重试（已等{waited}分钟）")
+        time.sleep(300)
+        waited += 5
+        rows = fetch_day(date)
+        print(f"  {len(rows)} 行")
     if not rows:
         print(f"{date} 无数据（非交易日？），跳过")
         sys.exit(0)
