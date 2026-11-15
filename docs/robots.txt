@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://position.futureke7.cn/sitemap.xml
