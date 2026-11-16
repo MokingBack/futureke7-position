@@ -167,9 +167,11 @@ if __name__ == '__main__':
     os.makedirs(f'{BASE}/docs', exist_ok=True)
     open(out,'w').write(html)
     print(f"已生成 {out}")
-    # 生成历史列表 index.html
-    import glob as _g
-    files = sorted([os.path.basename(p).replace('.html','') for p in _g.glob(f'{BASE}/docs/*.html') if os.path.basename(p)!='index.html'], reverse=True)
+    # 生成历史列表 index.html（仅保留 YYYY-MM-DD 日期页，排除百度/Bing/Google 等验证文件）
+    import glob as _g, re as _re
+    _date_re = _re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    files = sorted([os.path.basename(p)[:-5] for p in _g.glob(f'{BASE}/docs/*.html')
+                    if os.path.basename(p) != 'index.html' and _date_re.match(os.path.basename(p)[:-5])], reverse=True)
     rows = ''.join(f'<div class="row"><a href="{d}.html">{d}</a></div>' for d in files)
     idx = f'''<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8">
