@@ -211,11 +211,28 @@ h1{{font-size:20px;text-align:center;margin-bottom:24px}}
 .row{{padding:12px;border-bottom:1px solid #333}}
 .row a{{color:#aaa;text-decoration:none;font-size:15px}}
 .row a:hover{{color:#fff}}
+.note{{background:#16213e;border-radius:8px;padding:14px 16px;margin-bottom:24px;color:#bbb;font-size:12px;line-height:1.7}}
+.note p{{margin:8px 0}}
+.note ul{{margin:8px 0;padding-left:18px}}
+.note li{{margin:6px 0}}
+.note strong{{color:#eee}}
 .foot{{text-align:center;color:#555;font-size:11px;margin-top:30px}}
 </style></head><body>
 <div class="wrap">
 <h1>持仓观察</h1>
 <p style="text-align:center;margin-bottom:24px"><a href="https://futureke7.cn/" style="color:#888;font-size:13px">← 返回主页</a></p>
+<div class="note">
+<p>这里列的是每天收盘后公开的期货持仓榜，按期货公司席位把多头、空头当天的增减汇总到一起，分成全市场席位和外资背景席位两组。每条能看到当天加多还是减多、加空还是减空，是接着上一天的方向走还是反过来，连着几天同向，以及近 5 天累计哪边多。</p>
+<p><strong>但别拿它当交易信号。</strong>主要是这几点：</p>
+<ul>
+<li>榜是收盘后才出的，等看到的时候动作早就走完了，慢半拍；</li>
+<li>看不出席位是新开、了结还是在做对冲，也不知道背后是什么类型的资金；</li>
+<li>加空不等于要跌，加多不等于要涨，持仓方向和行情经常对不上；</li>
+<li>只到期货公司这一层，席位后面的客户情况看不到。</li>
+</ul>
+<p><strong>它顶多当个盘后参照：</strong>看看当下是在增仓还是减仓、多空哪边在累积、分歧大不大；复盘时对照一下自己当天的判断。真要进场，还得看价格位置和自己的规则，这份榜单给不了买卖依据。</p>
+<p>本页不区分席位背后的客户身份，也不判断后续涨跌；仅为公开持仓数据整理，不构成任何投资建议。</p>
+</div>
 {rows}
 <div class="foot">futureke7 · 未来可期工作室<br>本页仅为公开持仓数据统计整理，不构成任何投资建议</div>
 </div></body></html>'''
