@@ -108,10 +108,10 @@ def render(date, data):
             acts = to_actions(sym, gkey, v)
             if acts:
                 items.append((sym, SYM_NAME[sym], acts, v))
-        # 按总变化绝对值排序
-        items.sort(key=lambda x: -(abs(x[3]['lp'])+abs(x[3]['sp'])))
+        # 按单边最大变化强度排序：避免多空双开品种靠两边之和挤出单边显著品种
+        items.sort(key=lambda x: -max(abs(x[3]['lp']), abs(x[3]['sp'])))
         rows_html = ''
-        for sym, name, acts, v in items[:25]:
+        for sym, name, acts, v in items[:30]:
             act_str = '、'.join(f'{a}{n}' for a,n in acts)
             rows_html += f'<div class="row"><span class="sym">{name}</span><span class="act">{act_str}</span></div>'
         cols_html.append(f'<div class="col"><h2>{gname}</h2>{rows_html}</div>')
