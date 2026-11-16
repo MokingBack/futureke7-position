@@ -88,15 +88,16 @@ def fetch_day(date):
         page += 1
     return all_rows
 
-def side_text(side):
-    """一侧评定转成展示文本。"""
+def side_text(side, val):
+    """一侧评定转成展示文本，附当日手数。"""
     if not side['base']:
-        return '<span class="muted">变动不大</span>'
+        return '<span class="muted">—</span>'
     s = side['base']
     if side['cont']:
         s += '·' + side['cont']
     if side['streak'] >= 2:
-        s += f"(连续{side['streak']}日)"
+        s += f"({side['streak']}日)"
+    s += f" {val:+d}"
     return s
 
 def render(date, today, history):
@@ -117,17 +118,17 @@ def render(date, today, history):
         items.sort(key=lambda x: -max(abs(x[2]['lp']), abs(x[2]['sp'])))
         rows_html = ''
         for sym, name, ev in items[:30]:
-            long_txt = side_text(ev['long'])
-            short_txt = side_text(ev['short'])
-            cum = f"5日 多{ev['cum_lp']:+d} / 空{ev['cum_sp']:+d}"
+            long_txt = side_text(ev['long'], ev['lp'])
+            short_txt = side_text(ev['short'], ev['sp'])
             strong = f'<span class="strong">{ev["strong"]}</span>' if ev['strong'] else ''
+            cum = f"5日 {ev['cum_lp']:+d}/{ev['cum_sp']:+d}"
             rows_html += (
                 f'<div class="row">'
                 f'<span class="sym">{name}</span>'
                 f'<span class="side long">{long_txt}</span>'
                 f'<span class="side short">{short_txt}</span>'
-                f'<span class="cum">{cum}</span>'
                 f'{strong}'
+                f'<span class="cum">{cum}</span>'
                 f'</div>'
             )
         cols_html.append(f'<div class="col"><h2>{gname}</h2>{rows_html}</div>')
@@ -143,15 +144,15 @@ h1{{font-size:18px;text-align:center;margin:8px 0 4px}}
 .board{{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:1200px;margin:0 auto}}
 .col{{background:#16213e;border-radius:8px;padding:12px}}
 .col h2{{font-size:14px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid #333}}
-.row{{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;padding:6px 0;font-size:13px;border-bottom:1px solid #222}}
-.sym{{color:#aaa;min-width:64px}}
-.side{{min-width:110px}}
+.row{{display:flex;flex-wrap:nowrap;align-items:baseline;gap:6px 8px;padding:6px 0;font-size:12px;white-space:nowrap;overflow:hidden;border-bottom:1px solid #222}}
+.sym{{color:#aaa;min-width:56px;flex:none}}
+.side{{flex:none}}
 .long{{color:#e8a0a0}}
 .short{{color:#8fb8e8}}
-.cum{{color:#777;font-size:11px}}
-.strong{{color:#ccc;font-size:11px}}
+.cum{{color:#777;font-size:11px;flex:none}}
+.strong{{color:#ccc;font-size:11px;flex:none}}
 .muted{{color:#555}}
-@media(max-width:700px){{.board{{grid-template-columns:1fr}}}}
+@media(max-width:700px){{.board{{grid-template-columns:1fr}}.row{{font-size:11px;gap:4px 6px}}.cum{{display:none}}}}
 </style></head><body>
 <h1>持仓观察</h1>
 <div class="sub">{date} · <a href="https://futureke7.cn/" style="color:#888">← 返回主页</a></div>
